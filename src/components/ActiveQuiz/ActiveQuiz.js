@@ -12,7 +12,7 @@ const ActiveQuiz = (props) => (
 			</small>
 		</p>
 
-		<AnswersList answers={props.answers} />
+		<AnswersList state={props.state} answers={props.answers} />
 	</div>
 );
 export default ActiveQuiz;
