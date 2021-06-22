@@ -3,6 +3,7 @@ import classes from './Auth.module.css';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
 import is from 'is_js';
+import axios from 'axios';
 
 class Auth extends Component {
 	state = {
@@ -17,8 +18,8 @@ class Auth extends Component {
 				touched: false,
 				validation: {
 					required: true,
-					email: true,
-				},
+					email: true
+				}
 			},
 			password: {
 				value: '',
@@ -29,16 +30,48 @@ class Auth extends Component {
 				touched: false,
 				validation: {
 					required: true,
-					minLength: 6,
-				},
-			},
-		},
+					minLength: 6
+				}
+			}
+		}
 	};
 
-	loginHandler = () => {};
-	registerHandler = () => {};
+	loginHandler = async () => {
+		const authData = {
+			email: this.state.formControls.email.value,
+			password: this.state.formControls.password.value,
+			returnSecureToken: true
+		};
+		try {
+			const response = await axios.post(
+				'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDa-SQbwAzIUZrBrjkzO_0sgvMeLY2mgVU',
+				authData
+			);
 
-	submitHandler = (event) => {
+			console.log(response.data);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+	registerHandler = async () => {
+		const authData = {
+			email: this.state.formControls.email.value,
+			password: this.state.formControls.password.value,
+			returnSecureToken: true
+		};
+		try {
+			const response = await axios.post(
+				'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDa-SQbwAzIUZrBrjkzO_0sgvMeLY2mgVU',
+				authData
+			);
+
+			console.log(response.data);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
+	submitHandler = event => {
 		event.preventDefault();
 	};
 
@@ -74,7 +107,7 @@ class Auth extends Component {
 
 		let isFormValid = true;
 
-		Object.keys(formControls).forEach((name) => {
+		Object.keys(formControls).forEach(name => {
 			isFormValid = formControls[name].valid && isFormValid;
 		});
 
@@ -94,7 +127,7 @@ class Auth extends Component {
 					label={control.label}
 					errorMessage={control.errorMessage}
 					shouldValidate={!!control.validation}
-					onChange={(event) => this.onChangeHandler(event, controlName)}
+					onChange={event => this.onChangeHandler(event, controlName)}
 				/>
 			);
 		});
