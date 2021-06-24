@@ -1,7 +1,6 @@
 import classes from './AnswerItem.module.css';
-import { AnswerContext } from '../../../../containers/Quiz/Quiz';
 
-const AnswerItem = (props) => {
+const AnswerItem = props => {
 	const cls = [classes.AnswerItem];
 
 	if (props.state) {
@@ -9,13 +8,9 @@ const AnswerItem = (props) => {
 	}
 
 	return (
-		<AnswerContext.Consumer>
-			{(onAnswerClick) => (
-				<li className={cls.join(' ')} onClick={() => onAnswerClick(props.answer.id)}>
-					{props.answer.text}
-				</li>
-			)}
-		</AnswerContext.Consumer>
+		<li className={cls.join(' ')} onClick={() => props.onAnswerClick(props.answer.id)}>
+			{props.answer.text}
+		</li>
 	);
 };
 
